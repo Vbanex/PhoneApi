@@ -55,7 +55,7 @@ namespace PhoneApi.Controllers
                 code = countryCode.Substring(0, 3);
             }
            
-            var country = await _context.Countries.Include(s => s.Details).FirstOrDefaultAsync(b => b.CountryCode == code);
+            var country = await _context.Countries.Include(s => s.countryDetails).FirstOrDefaultAsync(b => b.CountryCode == code);
 
             if (country == null)
             {
