@@ -14,7 +14,7 @@ namespace PhoneApi.Models
         public string CountryCode { get; set; }
         public string Name { get; set; }
         public string CountryIso { get; set; }
-        public ICollection<CountryDetails> countryDetails { get; set; }
+        public ICollection<CountryDetails> CountryDetails { get; set; }
 
     }
 }

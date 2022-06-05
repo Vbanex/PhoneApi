@@ -33,7 +33,7 @@ namespace PhoneApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Country>> GetCountry(long id)
         {
-            var country = await _context.Countries.Include(s => s.Details).FirstOrDefaultAsync(b => b.Id == id);
+            var country = await _context.Countries.FindAsync(id);
 
             if (country == null)
             {
@@ -41,21 +41,33 @@ namespace PhoneApi.Controllers
             }
 
             return country;
+
         }
         */
 
-        // GET: api/Countries/08054324567
+        // GET: api/Countries/23408054324567
         
-        [HttpGet("{CountryCode}")]
-        public async Task<ActionResult<Country>> GetCountryDetails(string countryCode)
+        [HttpGet("{PhoneNumber}")]
+        public async Task<ActionResult<Country>> GetCountryDetails(string phoneNumber)
         {
-            string code = null;
-            if (!string.IsNullOrEmpty(countryCode))
+            string countryCode = null;
+
+            if(phoneNumber.Length < 3)
             {
-                code = countryCode.Substring(0, 3);
+                return BadRequest();
+            }
+
+            if (!string.IsNullOrEmpty(phoneNumber))
+            {
+                countryCode = phoneNumber.Substring(0, 3);
+            }
+
+            if(countryCode == null)
+            {
+                return NoContent();
             }
            
-            var country = await _context.Countries.Include(s => s.countryDetails).FirstOrDefaultAsync(b => b.CountryCode == code);
+  var country = await _context.Countries.Include(s => s.CountryDetails).FirstOrDefaultAsync(b => b.CountryCode == countryCode);
 
             if (country == null)
             {
@@ -63,6 +75,7 @@ namespace PhoneApi.Controllers
             }
 
             return country;
+
         }
         
 
